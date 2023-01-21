@@ -2,6 +2,7 @@ package com.example.sd2thesis
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -12,12 +13,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
 class MainActivity : AppCompatActivity() {
 
+    /** Fire base **/
     private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private var myRef = database.getReference("message")
+    private var dbRef = database.getReference("message")
+    //private var storageRef = FirebaseStorage.getInstance().getReference()
+    //var worksRef: StorageReference? = storageRef.child("MyWorks")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,8 @@ class MainActivity : AppCompatActivity() {
 
         /** Spannable string **/
         var spannableString: SpannableString?
+
+
 
 
         /**
@@ -125,8 +133,13 @@ class MainActivity : AppCompatActivity() {
 
         /** save button, not working. **/
         txteditorSave.setOnClickListener {
-            Toast.makeText(this, "available next patch", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "not available", Toast.LENGTH_LONG).show()
+
         }
 
     }
+
+
+
 }
+
