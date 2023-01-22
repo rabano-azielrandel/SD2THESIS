@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SimulationActivity"
-    android:background="@drawable/simulation">
+    android:background="@drawable/letters_simulation"
+    tools:context=".SimulationActivity">
 
     <VideoView
         android:id="@+id/vv_video"
-        android:layout_width="350dp"
-        android:layout_height="370dp"
+        android:layout_width="300dp"
+        android:layout_height="280dp"
         android:layout_marginTop="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47000003" />
+        app:layout_constraintVertical_bias="0.651" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_simul_return"
@@ -31,6 +31,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="280dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="189dp"
+        android:contentDescription="@string/letters"
+        app:layout_constraintBottom_toTopOf="@+id/vv_video"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/round_edge_enabler" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
