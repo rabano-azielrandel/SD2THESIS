@@ -1,13 +1,23 @@
 package com.example.sd2thesis
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.lang.reflect.Executable
 
+@Suppress("DEPRECATION", "NAME_SHADOWING")
 class DashboardActivity : AppCompatActivity() {
+
+    /** For uploading docx file **/
+    private val docx : Int = 0
+    private lateinit var uri : Uri
+    private lateinit var storageRef : StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +36,9 @@ class DashboardActivity : AppCompatActivity() {
         val dict = findViewById<AppCompatButton>(R.id.btn_go_dictionary)
         val upload = findViewById<AppCompatButton>(R.id.btn_upload_docx)
         val viewWork = findViewById<AppCompatButton>(R.id.btn_view_works)
+
+        /** Firebase Storage **/
+        storageRef = FirebaseStorage.getInstance().getReference("Works")
 
         /** intent variable **/
         var intent: Intent?
@@ -76,7 +89,13 @@ class DashboardActivity : AppCompatActivity() {
 
         /** Upload is not working yet**/
         upload.setOnClickListener {
-            Toast.makeText(this, "available next patch", Toast.LENGTH_LONG).show()
+            // uploading docx
+            val intent = Intent()
+            intent.type = "docx/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select Docx File"), docx)
+
+            /** NOTE: request.time < timestamp.date(2023, 2, 21); (ORIGINAL RULE) **/
         }
 
         /** View Works **/
@@ -84,6 +103,37 @@ class DashboardActivity : AppCompatActivity() {
             intent = Intent(this, ViewWorkActivity::class.java)
             startActivity(intent)
         }
+
+    }
+
+    // fetching files from its source
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val uriPath : String?
+
+        if (resultCode == RESULT_OK){
+            if (requestCode == docx){
+                uri = data!!.data!!
+                // uriPath = uri.toString()
+                uri.toString().also { uriPath = it }
+                upload()
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun upload(){
+        var ref = storageRef.child(uri.lastPathSegment!!)
+
+        try {
+            ref.putFile(uri).addOnSuccessListener {
+                Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception){
+            Toast.makeText(this, "Failed to Upload", Toast.LENGTH_SHORT).show()
+        }
+
 
     }
 }

@@ -1,24 +1,34 @@
 package com.example.sd2thesis
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.content.Intent
 import android.graphics.Typeface
+import android.net.Uri
+import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+
 
 class MainActivity : AppCompatActivity() {
+
+    /** Fire base **/
+    private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private var dbRef = database.getReference("message")
+    private var storageRef = FirebaseStorage.getInstance()
+    var worksRef: StorageReference? = storageRef.getReference("MyWorks")
+    var workID = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
 
         /** initializing variables **/
@@ -36,6 +46,8 @@ class MainActivity : AppCompatActivity() {
 
         /** Spannable string **/
         var spannableString: SpannableString?
+
+
 
 
         /**
@@ -122,8 +134,23 @@ class MainActivity : AppCompatActivity() {
 
         /** save button, not working. **/
         txteditorSave.setOnClickListener {
-            Toast.makeText(this, "available next patch", Toast.LENGTH_LONG).show()
+            var data = texteditor.text.toString()
+
+            try {
+                worksRef!!.child(workID.toString()).putBytes(data.toByteArray()).addOnSuccessListener {
+                    Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
+                }
+
+                workID += 1
+            } catch (e : Exception){
+                Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
+            }
+
         }
 
     }
+
+
+
 }
+
