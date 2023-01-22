@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
     /** Fire base **/
     private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var dbRef = database.getReference("message")
-    //private var storageRef = FirebaseStorage.getInstance().getReference()
-    //var worksRef: StorageReference? = storageRef.child("MyWorks")
+    private var storageRef = FirebaseStorage.getInstance()
+    var worksRef: StorageReference? = storageRef.getReference("MyWorks")
+    var workID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,7 +134,17 @@ class MainActivity : AppCompatActivity() {
 
         /** save button, not working. **/
         txteditorSave.setOnClickListener {
-            Toast.makeText(this, "not available", Toast.LENGTH_LONG).show()
+            var data = texteditor.text.toString()
+
+            try {
+                worksRef!!.child(workID.toString()).putBytes(data.toByteArray()).addOnSuccessListener {
+                    Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
+                }
+
+                workID += 1
+            } catch (e : Exception){
+                Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
+            }
 
         }
 
