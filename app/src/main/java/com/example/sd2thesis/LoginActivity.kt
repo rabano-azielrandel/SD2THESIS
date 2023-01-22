@@ -6,13 +6,18 @@ import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var user: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        user = FirebaseAuth.getInstance()
 
         /** Initializing Variables **/
         val forgetPass = findViewById<TextView>(R.id.tv_forget_pass)
@@ -21,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
 
         /** intent variable **/
         var intent : Intent?
+
 
         /** Forget Pass **/
         forgetPass.setOnClickListener {
@@ -31,8 +37,29 @@ class LoginActivity : AppCompatActivity() {
          * NOT FULLY DONE
          * PLEASE CONNECT IT TO FIREBASE **/
         login.setOnClickListener {
-            intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
+
+            val email = findViewById<TextInputLayout>(R.id.til_login_email).editText?.text.toString()
+            val password = findViewById<TextInputLayout>(R.id.til_login_password).editText?.text.toString()
+
+            if (email.isNotEmpty() && password.isNotEmpty()){
+                user.signInWithEmailAndPassword(email,password).addOnCompleteListener{ mTask ->
+                    if(mTask.isSuccessful){
+                        Toast.makeText(
+                            this,
+                            "Login successful",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        startActivity(Intent(this, DashboardActivity::class.java))
+                        finish()
+                    }else {
+                        Toast.makeText(this, mTask.exception!!.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+
+            } else {
+                Toast.makeText(this, "Email and/or Password cannot be empty", Toast.LENGTH_LONG).show()
+            }
         }
 
         /** Redirect to Sign up **/
@@ -41,4 +68,5 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

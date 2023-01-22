@@ -10,6 +10,7 @@
     <string name="hint_last_name">Last Name</string>
     <string name="hint_bday">Date of Birth</string>
     <string name="hint_grade_level">Grade Level</string>
+    <string name="hint_school_organization">School/Organization</string>
     <string name="hint_email">Email</string>
     <string name="hint_confirm_password">Confirm Password</string>
     <string name="hint_security_answer">Your Answer</string>
@@ -18,4 +19,5 @@
     <string name="dash_age"><b>Age:</b></string>
     <string name="dash_grade_level"><b>Grade Level:</b></string>
     <string name="dash_school_org"><b>School/Org:</b></string>
+
 </resources>

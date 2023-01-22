@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.lang.reflect.Executable
@@ -18,6 +19,9 @@ class DashboardActivity : AppCompatActivity() {
     private val docx : Int = 0
     private lateinit var uri : Uri
     private lateinit var storageRef : StorageReference
+
+    /** For user **/
+    private lateinit var user : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +41,23 @@ class DashboardActivity : AppCompatActivity() {
         val upload = findViewById<AppCompatButton>(R.id.btn_upload_docx)
         val viewWork = findViewById<AppCompatButton>(R.id.btn_view_works)
 
+        /** For login User **/
+        user = FirebaseAuth.getInstance()
+
         /** Firebase Storage **/
         storageRef = FirebaseStorage.getInstance().getReference("Works")
 
         /** intent variable **/
+
+        if(user.currentUser != null){
+            user.currentUser?.let {
+                val name = findViewById<TextView>(R.id.tv_dash_name)
+
+                name.text = it.email
+            }
+        }
         var intent: Intent?
 
-        /** THIS SHOULD SHOW ACCORDING TO USERS INFO**/
-        "${name.text} Not available right now".also { name.text = it }
-        "${age.text} Not available right now".also { age.text = it }
-        "${grade.text} Not available right now".also { grade.text = it }
-        "${org.text} Not available right now".also { org.text = it }
 
         /** View profile btn must show the personal info of the user
          * NOT WORKING**/
@@ -58,9 +68,11 @@ class DashboardActivity : AppCompatActivity() {
         /** logout and redirect to main page
          *  NOTE: redirect palang ito walang pang logging out ng acc**/
         logout.setOnClickListener{
+            user.signOut()
             Toast.makeText(this, "Successfully logged out :)", Toast.LENGTH_LONG).show()
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         /** Text editor **/
