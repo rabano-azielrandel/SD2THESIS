@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
     // private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var storageRef = FirebaseStorage.getInstance()
     private var worksRef: StorageReference? = storageRef.getReference("MyWorks")
-    private var workID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,13 +133,13 @@ class MainActivity : AppCompatActivity() {
         txteditorSave.setOnClickListener {
             val data = texteditor.text.toString()
 
+            /** NOTE: THE USER CANT SET FILE NAME**/
+            /** NOTE: THE SYSTEM STILL DOESN'T KNOW WHO IS THE OWNER OF THE FILE **/
             try {
                 /** Conversion of text into bytes **/
-                worksRef!!.child(workID.toString()).putBytes(data.toByteArray()).addOnSuccessListener {
+                worksRef!!.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
                     Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
                 }
-                /** UNCOMMENT THIS IF THE SYSTEM IS READY FOR PRESENTATION **/
-                //workID += 1
             } catch (e : Exception){
                 Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
             }
