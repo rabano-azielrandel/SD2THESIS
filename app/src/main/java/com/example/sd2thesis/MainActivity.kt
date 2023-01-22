@@ -125,23 +125,25 @@ class MainActivity : AppCompatActivity() {
 
          /**  return button
             * if the user is already logged in go dashboard
-            * else prompt the user to log in  **/
+            * else prompt the user to log in
+            * not yet working **/
         txteditorReturn.setOnClickListener{
             Toast.makeText(this, "Login First", Toast.LENGTH_LONG).show()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
-        /** save button, not working. **/
+        /** save button **/
         txteditorSave.setOnClickListener {
             var data = texteditor.text.toString()
 
             try {
+                /** Conversion of text into bytes **/
                 worksRef!!.child(workID.toString()).putBytes(data.toByteArray()).addOnSuccessListener {
                     Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
                 }
-
-                workID += 1
+                /** UNCOMMENT THIS IF THE SYSTEM IS READY FOR PRESENTATION **/
+                //workID += 1
             } catch (e : Exception){
                 Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
             }

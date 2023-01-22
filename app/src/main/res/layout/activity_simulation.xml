@@ -37,14 +37,14 @@
         android:layout_width="280dp"
         android:layout_height="150dp"
         android:layout_marginTop="189dp"
-        android:contentDescription="@string/letters"
         app:layout_constraintBottom_toTopOf="@+id/vv_video"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/round_edge_enabler" />
+        app:srcCompat="@drawable/round_edge_enabler"
+        android:contentDescription="TODO" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
