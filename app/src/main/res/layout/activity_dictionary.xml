@@ -53,7 +53,7 @@
         android:layout_height="475dp"
         android:text="Searched Meaning here"
         android:textSize="20dp"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"

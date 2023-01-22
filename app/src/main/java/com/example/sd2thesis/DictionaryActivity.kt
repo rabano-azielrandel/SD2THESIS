@@ -15,7 +15,6 @@ import com.google.firebase.database.ValueEventListener
 
 class DictionaryActivity : AppCompatActivity() {
 
-    //private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var dbRef = FirebaseDatabase.getInstance().getReference("db")
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,7 +2,6 @@ package com.example.sd2thesis
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
@@ -12,7 +11,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -20,11 +18,10 @@ import com.google.firebase.storage.StorageReference
 class MainActivity : AppCompatActivity() {
 
     /** Fire base **/
-    private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private var dbRef = database.getReference("message")
+    // private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var storageRef = FirebaseStorage.getInstance()
-    var worksRef: StorageReference? = storageRef.getReference("MyWorks")
-    var workID = 0
+    private var worksRef: StorageReference? = storageRef.getReference("MyWorks")
+    private var workID = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
         /** save button **/
         txteditorSave.setOnClickListener {
-            var data = texteditor.text.toString()
+            val data = texteditor.text.toString()
 
             try {
                 /** Conversion of text into bytes **/
