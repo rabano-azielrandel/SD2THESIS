@@ -48,13 +48,12 @@ class DictionaryActivity : AppCompatActivity() {
                         if (snapshot.child(keyWord).exists()){
                             snapshot.child(keyWord).value.toString().also { meaning.text = it }
                         }else{
-                            Toast.makeText(this@DictionaryActivity, "No Result Found", Toast.LENGTH_LONG).show()
                             "The word is not yet registered".also { meaning.text = it }
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@DictionaryActivity, "Fatal Error", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@DictionaryActivity, "Fatal Error", Toast.LENGTH_SHORT).show()
                     }
                 })
             }

@@ -11,8 +11,6 @@ import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import kotlin.math.ln
 
 class SignupActivity : AppCompatActivity() {
 
@@ -63,14 +61,14 @@ class SignupActivity : AppCompatActivity() {
         val fname = findViewById<TextInputLayout>(R.id.til_fname).editText?.text.toString()
         val lname = findViewById<TextInputLayout>(R.id.til_lname).editText?.text.toString()
         val bday = findViewById<TextInputLayout>(R.id.til_bday).editText?.text.toString()
-        val grade_lvl = findViewById<TextInputLayout>(R.id.til_grade_lvl).editText?.text.toString()
+        val gradeLvl = findViewById<TextInputLayout>(R.id.til_grade_lvl).editText?.text.toString()
         val school = findViewById<TextInputLayout>(R.id.til_school).editText?.text.toString()
         val confirmPass = findViewById<TextInputLayout>(R.id.til_signup_confirm_pass).editText?.text.toString()
         val question = findViewById<Spinner>(R.id.spin_security_quest).selectedItem.toString()
         val answer = findViewById<TextInputLayout>(R.id.til_security_answer).editText?.text.toString()
 
         /** runs if user details are complete**/
-        if (fname.isNotEmpty() && lname.isNotEmpty() && bday.isNotEmpty() && grade_lvl.isNotEmpty() && school.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty() && answer.isNotEmpty()) {
+        if (fname.isNotEmpty() && lname.isNotEmpty() && bday.isNotEmpty() && gradeLvl.isNotEmpty() && school.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && confirmPass.isNotEmpty() && answer.isNotEmpty()) {
 
             /** runs if password is the same with confirm password**/
             if (confirmPass == password) {
