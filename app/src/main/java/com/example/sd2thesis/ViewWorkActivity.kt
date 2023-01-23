@@ -1,15 +1,22 @@
 package com.example.sd2thesis
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+
 
 class ViewWorkActivity : AppCompatActivity() {
+
+    private val storageRef = FirebaseStorage.getInstance().getReference("MyWorks")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,8 +25,9 @@ class ViewWorkActivity : AppCompatActivity() {
         /** Initializing Variables **/
         val viewWorkReturn = findViewById<AppCompatButton>(R.id.btn_view_work_return)
         val download = findViewById<AppCompatButton>(R.id.btn_download)
+        val refresh = findViewById<AppCompatButton>(R.id.btn_refresh)
         val workList = findViewById<ListView>(R.id.lv_worklist)
-        val list = ArrayList<Int>()
+        val list = ArrayList<String>()
         val adapter = ArrayAdapter(this, android.R.layout.list_content, list)
 
 
@@ -30,12 +38,14 @@ class ViewWorkActivity : AppCompatActivity() {
         }
 
         /** Displaying Works of the user **/
+
         workList.adapter = adapter
 
-        var storageRef = FirebaseStorage.getInstance().getReference().child("MyWorks")
-
-
+        
 
 
     }
 }
+
+
+
