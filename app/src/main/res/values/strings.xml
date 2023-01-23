@@ -2,7 +2,7 @@
     <string name="app_name">SD2THESIS</string>
     <string name="sign">_</string>
     <string name="btn_forgot_pass">Forgot Password?</string>
-    <string name="no_acc">Doesn<b>\'</b>t have an account? <b>Sign in</b> here</string>
+    <string name="no_acc">Doesn<b>\'</b>t have an account? <b>Sign up</b> here</string>
     <string name="have_acc">Already have an account? <b>Login</b> here</string>
     <string name="hint_username">Username</string>
     <string name="hint_password">Password</string>

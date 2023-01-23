@@ -8,8 +8,8 @@
     android:background="@drawable/signup">
 
     <ScrollView
-        android:layout_width="371dp"
-        android:layout_height="629dp"
+        android:layout_width="368dp"
+        android:layout_height="672dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -146,6 +146,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/light_orange"
                     android:hint="@string/hint_password"
+                    android:inputType="textPassword"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,6 +165,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/light_orange"
                     android:hint="@string/hint_confirm_password"
+                    android:inputType="textPassword"
                     android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 

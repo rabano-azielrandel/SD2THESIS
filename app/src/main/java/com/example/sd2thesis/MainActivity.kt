@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.text.style.UnderlineSpan
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     // private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var storageRef = FirebaseStorage.getInstance()
     private var worksRef: StorageReference? = storageRef.getReference("MyWorks")
+    private lateinit var user : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,7 +104,7 @@ class MainActivity : AppCompatActivity() {
 
         /** justify alignment **/
         justify.setOnClickListener{
-            texteditor.textAlignment
+            texteditor.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
         }
 
         /** clear formatting
@@ -124,30 +128,51 @@ class MainActivity : AppCompatActivity() {
             * else prompt the user to log in
             * not yet working **/
         txteditorReturn.setOnClickListener{
-            Toast.makeText(this, "Login First", Toast.LENGTH_LONG).show()
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+
+            user = FirebaseAuth.getInstance()
+
+            if(user.currentUser != null){
+                user.currentUser?.let {
+                    val intent = Intent(this, DashboardActivity::class.java)
+                    startActivity(intent)
+                }
+            } else {
+                Toast.makeText(this, "Login First", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         /** save button **/
         txteditorSave.setOnClickListener {
             val data = texteditor.text.toString()
 
-            /** NOTE: THE USER CANT SET FILE NAME**/
-            /** NOTE: THE SYSTEM STILL DOESN'T KNOW WHO IS THE OWNER OF THE FILE **/
-            try {
-                /** Conversion of text into bytes **/
-                worksRef!!.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
-                    Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
+            user = FirebaseAuth.getInstance()
+
+            if(user.currentUser != null){
+                user.currentUser?.let {
+                    /** NOTE: THE USER CANT SET FILE NAME**/
+                    /** NOTE: THE SYSTEM STILL DOESN'T KNOW WHO IS THE OWNER OF THE FILE **/
+                    try {
+                        /** Conversion of text into bytes **/
+                        worksRef!!.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
+                            Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
+                        }
+                    } catch (e : Exception){
+                        Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
+                    }
                 }
-            } catch (e : Exception){
-                Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Login First", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
             }
+
+
 
         }
 
     }
-
 
 
 }

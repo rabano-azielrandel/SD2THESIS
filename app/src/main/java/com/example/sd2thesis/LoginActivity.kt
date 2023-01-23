@@ -20,18 +20,12 @@ class LoginActivity : AppCompatActivity() {
         user = FirebaseAuth.getInstance()
 
         /** Initializing Variables **/
-        val forgetPass = findViewById<TextView>(R.id.tv_forget_pass)
         val login = findViewById<AppCompatButton>(R.id.btn_login)
         val noAcc = findViewById<TextView>(R.id.tv_no_acc)
 
         /** intent variable **/
         var intent : Intent?
 
-
-        /** Forget Pass **/
-        forgetPass.setOnClickListener {
-            Toast.makeText(this, "available next patch", Toast.LENGTH_LONG).show()
-        }
 
         /** login
          * NOT FULLY DONE
@@ -40,6 +34,8 @@ class LoginActivity : AppCompatActivity() {
 
             val email = findViewById<TextInputLayout>(R.id.til_login_email).editText?.text.toString()
             val password = findViewById<TextInputLayout>(R.id.til_login_password).editText?.text.toString()
+
+
 
             if (email.isNotEmpty() && password.isNotEmpty()){
                 user.signInWithEmailAndPassword(email,password).addOnCompleteListener{ mTask ->
