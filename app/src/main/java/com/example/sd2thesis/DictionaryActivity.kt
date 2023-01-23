@@ -63,7 +63,7 @@ class DictionaryActivity : AppCompatActivity() {
 
         /** Thesaurus switcher**/
         thesaurus.setOnClickListener {
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, ThesaurusActivity::class.java)
             startActivity(intent)
         }
     }
