@@ -2,15 +2,10 @@ package com.example.sd2thesis
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -41,7 +36,7 @@ class ViewWorkActivity : AppCompatActivity() {
 
         workList.adapter = adapter
 
-        
+
 
 
     }

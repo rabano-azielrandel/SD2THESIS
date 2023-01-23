@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DictionaryActivity"
-    android:background="@drawable/dictionary">
+    tools:context=".ThesaurusActivity"
+    android:background="@drawable/thesaurus">
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/et_search_bar_dictionary"
+        android:id="@+id/et_search_bar_thesaurus"
         android:layout_width="290dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.155" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_search_dictionary"
+        android:id="@+id/btn_search_thesaurus"
         android:layout_width="42dp"
         android:layout_height="40dp"
         android:background="?android:selectableItemBackground"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_searched_word"
+        android:id="@+id/tv_searched_word_thesaurus"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:text="SEARCHED WORD"
@@ -47,10 +47,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_searched_meaning"
+        android:id="@+id/tv_synonyms"
         android:layout_width="350dp"
-        android:layout_height="475dp"
-        android:text="Searched Meaning here"
+        android:layout_height="275dp"
+        android:text="Searched Synonyms here"
         android:textSize="20dp"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,24 +58,24 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        app:layout_constraintVertical_bias="0.415" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_go_thesaurus"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="?android:selectableItemBackground"
-        android:text="@string/sign"
-        android:textColor="@color/Transparent"
+    <TextView
+        android:id="@+id/tv_antonyms"
+        android:layout_width="350dp"
+        android:layout_height="275dp"
+        android:text="Searched Antonyms here"
+        android:textSize="20dp"
+        android:textAlignment="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintVertical_bias="0.89"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.86" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_dictionary_return"
+        android:id="@+id/btn_return_to_dictionary"
         android:layout_width="48dp"
         android:layout_height="46dp"
         android:background="?android:selectableItemBackground"
@@ -87,6 +87,5 @@
         app:layout_constraintVertical_bias="0.98"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

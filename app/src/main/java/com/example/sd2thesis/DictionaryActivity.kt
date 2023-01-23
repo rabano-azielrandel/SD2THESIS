@@ -27,6 +27,7 @@ class DictionaryActivity : AppCompatActivity() {
         val dictReturn = findViewById<AppCompatButton>(R.id.btn_dictionary_return)
         val word = findViewById<TextView>(R.id.tv_searched_word)
         val meaning = findViewById<TextView>(R.id.tv_searched_meaning)
+        val thesaurus = findViewById<AppCompatButton>(R.id.btn_go_thesaurus)
 
 
         /** Redirecting to dashboard **/
@@ -58,8 +59,12 @@ class DictionaryActivity : AppCompatActivity() {
                 })
             }
 
-
         }
 
+        /** Thesaurus switcher**/
+        thesaurus.setOnClickListener {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

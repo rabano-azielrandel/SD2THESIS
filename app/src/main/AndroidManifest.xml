@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <!--for camera permission-->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- for camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -15,89 +14,70 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SD2THESIS"
         tools:targetApi="31">
-
-        <!--for simulation-->
         <activity
-            android:name=".SimulationPickerActivity"
+            android:name=".ThesaurusActivity"
             android:exported="false">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-        <!--for view work-->
+        <!-- for simulation -->
+        <activity
+            android:name=".SimulationPickerActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- for view work -->
         <activity
             android:name=".ViewWorkActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for dictionary-->
+        </activity> <!-- for dictionary -->
         <activity
             android:name=".DictionaryActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for simulation-->
+        </activity> <!-- for simulation -->
         <activity
             android:name=".SimulationActivity"
             android:exported="false">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for img recog-->
+        </activity> <!-- for img recog -->
         <activity
             android:name=".ImageRecogActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for dashboard-->
+        </activity> <!-- for dashboard -->
         <activity
             android:name=".DashboardActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for signup-->
+        </activity> <!-- for signup -->
         <activity
             android:name=".SignupActivity"
             android:exported="false">
-
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for login-->
+        </activity> <!-- for login -->
         <activity
             android:name=".LoginActivity"
             android:exported="false">
-
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
-        </activity>
-
-        <!--for text editor-->
+        </activity> <!-- for text editor -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
