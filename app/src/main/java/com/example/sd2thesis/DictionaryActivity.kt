@@ -13,6 +13,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+/** DICTIONARY SRC
+ * https://github.com/luisligunas/pinoy-dictionary-scraper/blob/main/Scraped%20Data/Dictionaries/tagalog_dictionary.json
+ * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
     private var dbRef = FirebaseDatabase.getInstance().getReference("db")
