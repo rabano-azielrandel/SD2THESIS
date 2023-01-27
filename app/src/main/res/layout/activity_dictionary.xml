@@ -7,7 +7,7 @@
     tools:context=".DictionaryActivity"
     android:background="@drawable/dictionary">
 
-    <AutoCompleteTextView
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/et_search_bar_dictionary"
         android:layout_width="290dp"
         android:layout_height="50dp"
