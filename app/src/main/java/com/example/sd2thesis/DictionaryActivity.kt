@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -25,7 +26,7 @@ class DictionaryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dictionary)
 
         /** Initializing Variables **/
-        val searchBarDict = findViewById<EditText>(R.id.et_search_bar_dictionary)
+        val searchBarDict = findViewById<AutoCompleteTextView>(R.id.et_search_bar_dictionary)
         val searchBtnDict = findViewById<AppCompatButton>(R.id.btn_search_dictionary)
         val dictReturn = findViewById<AppCompatButton>(R.id.btn_dictionary_return)
         val word = findViewById<TextView>(R.id.tv_searched_word)
