@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener
  * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
+    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
