@@ -1,12 +1,12 @@
 package com.example.sd2thesis
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -49,8 +49,12 @@ class DictionaryActivity : AppCompatActivity() {
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
 
+                        //last edited 1.27.23
                         if (snapshot.child(keyWord).exists()){
-                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
+                            val definition: String = snapshot.child("definition").value.toString()
+                            val word: String = snapshot.child("word").value.toString()
+
+                            meaning.text = "$definition $word"
                         }else{
                             "The word is not yet registered".also { meaning.text = it }
                         }
