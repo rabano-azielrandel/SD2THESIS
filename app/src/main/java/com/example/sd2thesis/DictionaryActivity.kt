@@ -3,7 +3,8 @@ package com.example.sd2thesis
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.EditText
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+
 
 /** DICTIONARY SRC
  * https://github.com/luisligunas/pinoy-dictionary-scraper/blob/main/Scraped%20Data/Dictionaries/tagalog_dictionary.json
@@ -25,7 +27,7 @@ class DictionaryActivity : AppCompatActivity() {
         setContentView(R.layout.activity_dictionary)
 
         /** Initializing Variables **/
-        val searchBarDict = findViewById<EditText>(R.id.et_search_bar_dictionary)
+        val searchBarDict = findViewById<AutoCompleteTextView>(R.id.et_search_bar_dictionary)
         val searchBtnDict = findViewById<AppCompatButton>(R.id.btn_search_dictionary)
         val dictReturn = findViewById<AppCompatButton>(R.id.btn_dictionary_return)
         val word = findViewById<TextView>(R.id.tv_searched_word)
@@ -39,13 +41,27 @@ class DictionaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
         /** Search Button **/
+        val list: ArrayList<String> = ArrayList()
+        val autoComplete = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        searchBarDict.setAdapter(autoComplete)
+
         searchBtnDict.setOnClickListener {
+
             if (TextUtils.isEmpty(searchBarDict.text.toString())){
                 Toast.makeText(this, "Please input a word!", Toast.LENGTH_LONG).show()
             } else{
                 dbRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
+
+                        for (suggestSnapshot in snapshot.children) {
+                            //Get the suggestion by childing the key of the string you want to get.
+                            val suggestion = suggestSnapshot.child("db").key.toString()
+                            //Add the retrieved string to the list
+                            list.add(suggestion)
+                        }
+
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
 

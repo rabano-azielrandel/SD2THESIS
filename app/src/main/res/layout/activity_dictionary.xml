@@ -7,7 +7,8 @@
     tools:context=".DictionaryActivity"
     android:background="@drawable/dictionary">
 
-    <com.google.android.material.textfield.TextInputEditText
+
+    <AutoCompleteTextView
         android:id="@+id/et_search_bar_dictionary"
         android:layout_width="290dp"
         android:layout_height="50dp"
@@ -16,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.297"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.155" />
+        app:layout_constraintVertical_bias="0.155"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_search_dictionary"
