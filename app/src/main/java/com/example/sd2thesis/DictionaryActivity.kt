@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener
  * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
+    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +49,12 @@ class DictionaryActivity : AppCompatActivity() {
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
 
-                        //last edited 1.27.23
+                        //last edited 1.28.23
                         if (snapshot.child(keyWord).exists()){
-                            val definition: String = snapshot.child("definition").value.toString()
-                            val word: String = snapshot.child("word").value.toString()
+                            //val definition: String = snapshot.child("definition").value.toString()
+                            //val word: String = snapshot.child("word").value.toString()
 
-                            meaning.text = "$definition $word"
+                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
                         }else{
                             "The word is not yet registered".also { meaning.text = it }
                         }
