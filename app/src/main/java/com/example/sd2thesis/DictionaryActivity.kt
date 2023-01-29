@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
  * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
+    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,13 +48,19 @@ class DictionaryActivity : AppCompatActivity() {
         dbRef.addValueEventListener(object  : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                for (suggestSnapshot in snapshot.children) {
+                /*for (suggestSnapshot in snapshot.children) {
                     //Get the suggestion by childing the key of the string you want to get.
                     val suggestion = suggestSnapshot.key.toString()
                     //Add the retrieved string to the list
                     list.add(suggestion)
-                }
+                }*/
 
+                for (data in snapshot.children) {
+                    //Get the suggestion by childing the key of the string you want to get.
+                    val suggestion = data.child("word").value.toString()
+                    //Add the retrieved string to the list
+                    list.add(suggestion)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -79,9 +85,11 @@ class DictionaryActivity : AppCompatActivity() {
                             //val definition: String = snapshot.child("definition").value.toString()
                             //val word: String = snapshot.child("word").value.toString()
 
-                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
+                            //snapshot.child(keyWord).value.toString().also { meaning.text = it }
+                            meaning.text = list.toString()
                         }else{
-                            "The word is not yet registered".also { meaning.text = it }
+                            //"The word is not yet registered".also { meaning.text = it }
+                            meaning.text = "hatodg"
                         }
                     }
 
