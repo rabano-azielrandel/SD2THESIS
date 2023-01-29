@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
  * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
+    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,22 +45,27 @@ class DictionaryActivity : AppCompatActivity() {
         }
 
         /** Storing the data in firebase to list so that we can have autocomplete **/
+        list.clear()
+        autoComplete.clear()
         dbRef.addValueEventListener(object  : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
-                /*for (suggestSnapshot in snapshot.children) {
+                for (suggestSnapshot in snapshot.children) {
                     //Get the suggestion by childing the key of the string you want to get.
                     val suggestion = suggestSnapshot.key.toString()
                     //Add the retrieved string to the list
                     list.add(suggestion)
-                }*/
+                    autoComplete.setNotifyOnChange(true)
+                }
 
-                for (data in snapshot.children) {
+                /** for other custom db**/
+                /*for (data in snapshot.children) {
                     //Get the suggestion by childing the key of the string you want to get.
                     val suggestion = data.child("word").value.toString()
                     //Add the retrieved string to the list
                     list.add(suggestion)
-                }
+
+                }*/
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -80,16 +85,13 @@ class DictionaryActivity : AppCompatActivity() {
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
 
-                        //last edited 1.28.23
                         if (snapshot.child(keyWord).exists()){
                             //val definition: String = snapshot.child("definition").value.toString()
                             //val word: String = snapshot.child("word").value.toString()
 
-                            //snapshot.child(keyWord).value.toString().also { meaning.text = it }
-                            meaning.text = list.toString()
+                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
                         }else{
-                            //"The word is not yet registered".also { meaning.text = it }
-                            meaning.text = "hatodg"
+                            "The word is not yet registered".also { meaning.text = it }
                         }
                     }
 
