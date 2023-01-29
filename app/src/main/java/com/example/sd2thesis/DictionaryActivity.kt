@@ -34,6 +34,9 @@ class DictionaryActivity : AppCompatActivity() {
         val meaning = findViewById<TextView>(R.id.tv_searched_meaning)
         val thesaurus = findViewById<AppCompatButton>(R.id.btn_go_thesaurus)
 
+        val list : ArrayList<String> = ArrayList()
+        val autoComplete = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        searchBarDict.setAdapter(autoComplete)
 
         /** Redirecting to dashboard **/
         dictReturn.setOnClickListener {
@@ -41,12 +44,24 @@ class DictionaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        dbRef.addValueEventListener(object  : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (suggestSnapshot in snapshot.children) {
+                    //Get the suggestion by childing the key of the string you want to get.
+                    val suggestion = suggestSnapshot.key.toString()
+                    //Add the retrieved string to the list
+                    list.add(suggestion)
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
 
         /** Search Button **/
-        val list: ArrayList<String> = ArrayList()
-        val autoComplete = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
-        searchBarDict.setAdapter(autoComplete)
-
         searchBtnDict.setOnClickListener {
 
             if (TextUtils.isEmpty(searchBarDict.text.toString())){
@@ -54,13 +69,6 @@ class DictionaryActivity : AppCompatActivity() {
             } else{
                 dbRef.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-
-                        for (suggestSnapshot in snapshot.children) {
-                            //Get the suggestion by childing the key of the string you want to get.
-                            val suggestion = suggestSnapshot.child("db").key.toString()
-                            //Add the retrieved string to the list
-                            list.add(suggestion)
-                        }
 
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
@@ -70,7 +78,8 @@ class DictionaryActivity : AppCompatActivity() {
                             //val definition: String = snapshot.child("definition").value.toString()
                             //val word: String = snapshot.child("word").value.toString()
 
-                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
+                            //snapshot.child(keyWord).value.toString().also { meaning.text = it }
+                            meaning.text = list.toString()
                         }else{
                             "The word is not yet registered".also { meaning.text = it }
                         }
