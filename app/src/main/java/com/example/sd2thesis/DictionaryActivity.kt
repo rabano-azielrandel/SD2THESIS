@@ -44,6 +44,7 @@ class DictionaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        /** Storing the data in firebase to list so that we can have autocomplete **/
         dbRef.addValueEventListener(object  : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
 
@@ -78,8 +79,7 @@ class DictionaryActivity : AppCompatActivity() {
                             //val definition: String = snapshot.child("definition").value.toString()
                             //val word: String = snapshot.child("word").value.toString()
 
-                            //snapshot.child(keyWord).value.toString().also { meaning.text = it }
-                            meaning.text = list.toString()
+                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
                         }else{
                             "The word is not yet registered".also { meaning.text = it }
                         }
