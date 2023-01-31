@@ -3,6 +3,7 @@ package com.example.sd2thesis
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +17,11 @@ import java.lang.reflect.Executable
 class DashboardActivity : AppCompatActivity() {
 
     /** For uploading docx file **/
+    private val readRequestCode = 0
     private val docx : Int = 0
     private lateinit var uri : Uri
     private lateinit var storageRef : StorageReference
+
 
     /** For user **/
     private lateinit var user : FirebaseAuth
@@ -40,6 +43,7 @@ class DashboardActivity : AppCompatActivity() {
         val dict = findViewById<AppCompatButton>(R.id.btn_go_dictionary)
         val upload = findViewById<AppCompatButton>(R.id.btn_upload_docx)
         val viewWork = findViewById<AppCompatButton>(R.id.btn_view_works)
+
 
         /** For login User **/
         user = FirebaseAuth.getInstance()
@@ -99,15 +103,10 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        /** Upload is not working yet**/
+        /** Upload **/
         upload.setOnClickListener {
-            // uploading docx
-            val intent = Intent()
-            intent.type = "docx/*"
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Docx File"), docx)
+            performFileSearch()
 
-            /** NOTE: request.time < timestamp.date(2023, 2, 21); (ORIGINAL RULE) **/
         }
 
         /** View Works **/
@@ -118,34 +117,28 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
-    // fetching files from its source
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val uriPath : String?
-
-        if (resultCode == RESULT_OK){
-            if (requestCode == docx){
-                uri = data!!.data!!
-                // uriPath = uri.toString()
-                uri.toString().also { uriPath = it }
-                upload()
-            }
-
+    /**For uploading**/
+    private fun performFileSearch() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "text/plain"
         }
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun upload(){
-        var ref = storageRef.child(uri.lastPathSegment!!)
-
-        try {
-            ref.putFile(uri).addOnSuccessListener {
-                Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception){
-            Toast.makeText(this, "Failed to Upload", Toast.LENGTH_SHORT).show()
+        startActivityForResult(intent, readRequestCode)
         }
 
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+        if (requestCode == readRequestCode && resultCode == RESULT_OK) {
+            resultData?.data?.also { uri ->
+                contentResolver.openInputStream(uri)?.use { inputStream ->
+                    val fileContent = inputStream.readBytes().toString(Charsets.UTF_8)
+                    val intent = Intent(this, MainActivity::class.java).apply {
+                        putExtra("file_content", fileContent)
+                    }
+                    startActivity(intent)
+                }
+            }
+        }
     }
+
 }
