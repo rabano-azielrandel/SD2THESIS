@@ -29,6 +29,7 @@ class ViewWorkActivity : AppCompatActivity() {
         val list = ArrayList<String>()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
 
+
         listView.adapter = adapter
 
         /** Redirecting to dashboard **/
@@ -57,6 +58,13 @@ class ViewWorkActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+
+
+
+
+
+
 
     }
 }

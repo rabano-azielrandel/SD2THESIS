@@ -113,8 +113,8 @@
 
     <EditText
         android:id="@+id/et_text_editor"
-        android:layout_width="371dp"
-        android:layout_height="620dp"
+        android:layout_width="355dp"
+        android:layout_height="621dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -122,10 +122,10 @@
         android:textIsSelectable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintHorizontal_bias="0.564"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintVertical_bias="0.648" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_txt_editor_return"

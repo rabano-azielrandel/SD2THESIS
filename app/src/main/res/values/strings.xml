@@ -20,5 +20,9 @@
     <string name="dash_grade_level"><b>Grade Level:</b></string>
     <string name="dash_school_org"><b>School/Org:</b></string>
     <string name="download">_</string>
+    <string name="searched_word">SEARCHED WORD</string>
+    <string name="searched_synonyms_here">Searched Synonyms here</string>
+    <string name="searched_wordd">SEARCHED WORD</string>
+    <string name="searched_meaning_here">Searched Meaning here</string>
 
 </resources>

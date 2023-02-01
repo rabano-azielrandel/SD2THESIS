@@ -34,45 +34,49 @@
 
     <TextView
         android:id="@+id/tv_searched_word_thesaurus"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="SEARCHED WORD"
-        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/searched_word"
         android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.446"
-        app:layout_constraintVertical_bias="0.24"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.239" />
 
     <TextView
         android:id="@+id/tv_synonyms"
-        android:layout_width="350dp"
-        android:layout_height="275dp"
-        android:text="Searched Synonyms here"
-        android:textSize="20dp"
+        android:layout_width="348dp"
+        android:layout_height="229dp"
+        android:text="@string/searched_synonyms_here"
         android:textAlignment="textStart"
+        android:textSize="20dp"
+        android:textColor="#373638"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.415" />
+        app:layout_constraintVertical_bias="0.447" />
 
     <TextView
         android:id="@+id/tv_antonyms"
         android:layout_width="350dp"
-        android:layout_height="275dp"
+        android:layout_height="222dp"
         android:text="Searched Antonyms here"
-        android:textSize="20dp"
         android:textAlignment="textStart"
+        android:textColor="#373638"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintVertical_bias="0.843" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_return_to_dictionary"
@@ -87,5 +91,33 @@
         app:layout_constraintVertical_bias="0.98"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Synonyms"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_synonyms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_searched_word_thesaurus"
+        app:layout_constraintVertical_bias="0.758" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Antonyms"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/tv_antonyms"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_synonyms" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
