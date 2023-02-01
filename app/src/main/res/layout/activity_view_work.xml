@@ -50,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/lv_worklist"
+        android:id="@+id/list_view"
         android:layout_width="360dp"
         android:layout_height="600dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -185,8 +185,12 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        /**From View Work Activity**/
+        val contents = intent.getByteArrayExtra("contents")
+        textEditor.setText(contents?.let { String(it) })
 
-        /**FOR UPLOAD**/
+
+        /**For Upload**/
         val fileContent = intent.getStringExtra("file_content")
         if (fileContent != null) {
             textEditor.setText(fileContent)
@@ -197,9 +201,11 @@ class MainActivity : AppCompatActivity() {
             showFileNameInputDialog()
         }
 
+
+
     }
 
-    /**for download**/
+    /**For download**/
     private fun showFileNameInputDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Enter file name")
