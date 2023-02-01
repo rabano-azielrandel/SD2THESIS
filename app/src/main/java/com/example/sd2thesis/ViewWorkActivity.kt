@@ -26,8 +26,6 @@ class ViewWorkActivity : AppCompatActivity() {
 
         /** Initializing Variables **/
         val viewWorkReturn = findViewById<AppCompatButton>(R.id.btn_view_work_return)
-        val download = findViewById<AppCompatButton>(R.id.btn_download)
-        val refresh = findViewById<AppCompatButton>(R.id.btn_refresh)
         val list = ArrayList<String>()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
 

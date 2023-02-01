@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewWorkActivity"
-    android:background="@drawable/view_work">
+    android:background="@drawable/viewworks"
+    tools:context=".ViewWorkActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_view_work_return"
@@ -16,38 +16,10 @@
         android:textColor="@color/Transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintVertical_bias="0.985"
+        app:layout_constraintHorizontal_bias="0.524"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_download"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="?android:selectableItemBackground"
-        android:text="@string/sign"
-        android:textColor="@color/Transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.89"
-        app:layout_constraintVertical_bias="0.985"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_refresh"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:background="?android:selectableItemBackground"
-        android:text="@string/sign"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.985"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.993" />
 
     <ListView
         android:id="@+id/list_view"

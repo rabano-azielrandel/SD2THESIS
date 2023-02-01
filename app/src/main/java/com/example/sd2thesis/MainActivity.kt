@@ -171,10 +171,10 @@ class MainActivity : AppCompatActivity() {
                     try {
                         /** Conversion of text into bytes **/
                         worksRef!!.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
-                            Toast.makeText(this, "Uploaded Successfully", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
                         }
                     } catch (e : Exception){
-                        Toast.makeText(this, "Failed to Upload", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
                     }
                 }
             } else {
