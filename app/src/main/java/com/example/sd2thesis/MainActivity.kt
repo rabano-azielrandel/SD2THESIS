@@ -1,8 +1,6 @@
 package com.example.sd2thesis
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Environment
@@ -28,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     /** Fire base **/
     // private var database = FirebaseDatabase.getInstance("https://sd2thesis-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private var storageRef = FirebaseStorage.getInstance()
-    private var worksRef: StorageReference? = storageRef.getReference("MyWorks")
     private lateinit var user : FirebaseAuth
 
 
@@ -166,11 +163,10 @@ class MainActivity : AppCompatActivity() {
 
             if(user.currentUser != null){
                 user.currentUser?.let {
-                    /** NOTE: THE USER CANT SET FILE NAME**/
-                    /** NOTE: THE SYSTEM STILL DOESN'T KNOW WHO IS THE OWNER OF THE FILE **/
                     try {
                         /** Conversion of text into bytes **/
-                        worksRef!!.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
+                        val userWorksRef = storageRef.getReference("users/" + it.uid + "/works")
+                        userWorksRef.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
                             Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
                         }
                     } catch (e : Exception){

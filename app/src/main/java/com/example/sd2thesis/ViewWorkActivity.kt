@@ -9,12 +9,14 @@ import android.util.Log
 import com.google.firebase.storage.StorageReference
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 
 class ViewWorkActivity : AppCompatActivity() {
 
     private lateinit var listView: ListView
-    private lateinit var storageRef: StorageReference
+    private var storageRef = FirebaseStorage.getInstance().reference
+    private lateinit var user : FirebaseAuth
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,13 +24,11 @@ class ViewWorkActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_work)
 
         listView = findViewById(R.id.list_view)
-        storageRef = FirebaseStorage.getInstance().getReference("MyWorks")
 
         /** Initializing Variables **/
         val viewWorkReturn = findViewById<AppCompatButton>(R.id.btn_view_work_return)
         val list = ArrayList<String>()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
-
 
         listView.adapter = adapter
 
@@ -39,37 +39,30 @@ class ViewWorkActivity : AppCompatActivity() {
         }
 
         /** Displaying Works of the user **/
+        user = FirebaseAuth.getInstance()
+        user.currentUser?.let {
+            val userWorksRef = storageRef.child("users/${it.uid}/works")
 
-        storageRef.listAll().addOnSuccessListener { listResult ->
-            for (item in listResult.items) {
-                list.add(item.name)
+            userWorksRef.listAll().addOnSuccessListener { listResult ->
+                for (item in listResult.items) {
+                    list.add(item.name)
+                }
+                adapter.notifyDataSetChanged()
+            }.addOnFailureListener {
+                Log.e("Firebase", "Failed to list all files", it)
             }
-            adapter.notifyDataSetChanged()
-        }.addOnFailureListener {
-            Log.e("Firebase", "Failed to list all files", it)
         }
 
         listView.setOnItemClickListener { parent, view, position, id ->
             val item = adapter.getItem(position)
-            val fileRef = item?.let { storageRef.child(it) }
-            fileRef?.getBytes(Long.MAX_VALUE)?.addOnSuccessListener { contents ->
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra("contents", contents)
-                startActivity(intent)
+            item?.let {
+                val fileRef = storageRef.child("users/${user.currentUser?.uid}/works/$it")
+                fileRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { contents ->
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("contents", contents)
+                    startActivity(intent)
+                }
             }
         }
-
-
-
-
-
-
-
-
     }
 }
-
-
-
-
-

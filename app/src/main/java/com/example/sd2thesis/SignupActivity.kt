@@ -85,7 +85,8 @@ class SignupActivity : AppCompatActivity() {
                                 Toast.LENGTH_LONG
                             ).show()
 
-                            /** Adding User Details to Firebase**//*
+                            /** Adding User Details to Firebase**/
+                            /*
                             firebase = FirebaseDatabase.getInstance().getReference("Profiles")
                             val registeruser = Users(answer,bday, email, fname, grade_lvl, password, question, school, lname)
                             firebase.child(email).setValue(registeruser)*/
