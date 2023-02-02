@@ -24,5 +24,8 @@
     <string name="searched_synonyms_here">Searched Synonyms here</string>
     <string name="searched_wordd">SEARCHED WORD</string>
     <string name="searched_meaning_here">Searched Meaning here</string>
+    <string name="btn_current_text">Current Text</string>
+    <string name="btn_corrected_text">Corrected Text</string>
+    <string name="btn_return">Return</string>
 
 </resources>

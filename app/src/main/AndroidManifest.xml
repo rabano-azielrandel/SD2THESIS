@@ -16,13 +16,19 @@
         android:theme="@style/Theme.SD2THESIS"
         tools:targetApi="31">
         <activity
-            android:name=".ThesaurusActivity"
+            android:name=".TempCheckerActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <!-- for simulation -->
+        <activity
+            android:name=".ThesaurusActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- for simulation -->
         <activity
             android:name=".SimulationPickerActivity"
             android:exported="false">
