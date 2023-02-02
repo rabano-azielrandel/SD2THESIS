@@ -3,6 +3,7 @@ package com.example.sd2thesis
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignupActivity : AppCompatActivity() {
 
@@ -86,10 +88,13 @@ class SignupActivity : AppCompatActivity() {
                             ).show()
 
                             /** Adding User Details to Firebase**/
-                            /*
-                            firebase = FirebaseDatabase.getInstance().getReference("Profiles")
-                            val registeruser = Users(answer,bday, email, fname, grade_lvl, password, question, school, lname)
-                            firebase.child(email).setValue(registeruser)*/
+                            val database = FirebaseDatabase.getInstance().reference
+                            val key = database.child("Profiles").push().key
+                            val registerUser = Users(answer, bday, email, fname, gradeLvl, password, question, school, lname)
+
+                            if (key != null) {
+                                database.child("Profiles").child(key).setValue(registerUser)
+                            }
 
                             startActivity(Intent(this, LoginActivity::class.java))
                             finish()

@@ -9,6 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.lang.reflect.Executable
@@ -32,7 +36,7 @@ class DashboardActivity : AppCompatActivity() {
 
         /** INITIALIZING VARIABLE **/
         val name = findViewById<TextView>(R.id.tv_dash_name)
-        val age = findViewById<TextView>(R.id.tv_dash_age)
+        val bday = findViewById<TextView>(R.id.tv_dash_age)
         val grade = findViewById<TextView>(R.id.tv_dash_gradelvl)
         val org = findViewById<TextView>(R.id.tv_dash_School_Org)
         val viewProfile = findViewById<AppCompatButton>(R.id.btn_view_profile)
@@ -44,6 +48,7 @@ class DashboardActivity : AppCompatActivity() {
         val upload = findViewById<AppCompatButton>(R.id.btn_upload_docx)
         val viewWork = findViewById<AppCompatButton>(R.id.btn_view_works)
 
+        val database = FirebaseDatabase.getInstance().reference
 
         /** For login User **/
         user = FirebaseAuth.getInstance()
@@ -53,13 +58,43 @@ class DashboardActivity : AppCompatActivity() {
 
         /** intent variable **/
 
-        if(user.currentUser != null){
-            user.currentUser?.let {
-                val name = findViewById<TextView>(R.id.tv_dash_name)
+        val userCurrent = FirebaseAuth.getInstance().currentUser
 
-                name.text = it.email
+        if (userCurrent != null) {
+            val email = userCurrent.email
+
+            if (email != null) {
+                database.child("Profiles").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (profileSnapshot in dataSnapshot.children) {
+                            val profile = profileSnapshot.value as Map<*, *>
+                            if (profile["email_address"] == email) {
+                                val username = profile["first_name"] as String
+                                val birthday = profile["bithday"] as String
+                                val gradeLvl = profile["grade_level"] as String
+                                val school = profile["school"] as String
+
+                                name.text = username
+                                bday.text = birthday
+                                grade.text = gradeLvl
+                                org.text = school
+                                break
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@DashboardActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
+                    }
+                })
             }
         }
+
+
+
+
+
+
         var intent: Intent?
 
 
