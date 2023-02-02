@@ -3,6 +3,7 @@ package com.example.sd2thesis
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatButton
 
 class SimulationPickerActivity : AppCompatActivity() {
@@ -40,6 +41,7 @@ class SimulationPickerActivity : AppCompatActivity() {
         val x = findViewById<AppCompatButton>(R.id.btn_x)
         val y = findViewById<AppCompatButton>(R.id.btn_y)
         val z = findViewById<AppCompatButton>(R.id.btn_z)
+        val whiteboard = findViewById<ImageView>(R.id.whiteboardBtn)
 
         /** intent variable **/
         var intent: Intent?
@@ -304,6 +306,12 @@ class SimulationPickerActivity : AppCompatActivity() {
             stringToPass = "Z"
             intent!!.putExtra("ButtonClicked", stringToPass)
 
+            startActivity(intent)
+        }
+
+        /** For Whiteboard **/
+        whiteboard.setOnClickListener {
+            intent = Intent(this, LetterSimulation::class.java)
             startActivity(intent)
         }
     }

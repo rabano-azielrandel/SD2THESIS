@@ -413,4 +413,17 @@
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <ImageView
+        android:id="@+id/whiteboardBtn"
+        android:layout_width="77dp"
+        android:layout_height="64dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.347"
+        app:layout_constraintStart_toEndOf="@+id/btn_simul_picker_return"
+        app:layout_constraintTop_toBottomOf="@+id/btn_y"
+        app:layout_constraintVertical_bias="0.933"
+        app:srcCompat="@drawable/whiteboard_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

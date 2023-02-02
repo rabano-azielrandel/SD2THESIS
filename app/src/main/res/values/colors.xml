@@ -10,5 +10,8 @@
     <color name="Transparent">#00000000</color>
     <color name="orange">#E6C199</color>
     <color name="light_orange">#f0cead</color>
+    <color name="red">#d40b0b</color>
+    <color name="light_brown">#C39C75</color>
+    <color name="blue">#0c0ce8</color>
 
 </resources>

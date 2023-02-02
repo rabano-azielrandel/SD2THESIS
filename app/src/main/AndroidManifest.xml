@@ -16,6 +16,20 @@
         android:theme="@style/Theme.SD2THESIS"
         tools:targetApi="31">
         <activity
+            android:name=".PaintView"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".LetterSimulation"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".TempCheckerActivity"
             android:exported="false">
             <meta-data

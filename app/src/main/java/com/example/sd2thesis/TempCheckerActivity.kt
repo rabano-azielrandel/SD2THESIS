@@ -3,16 +3,18 @@ package com.example.sd2thesis
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //test
+/*
 import nltk.downloader.*
 import nltk.tokenize.*
 import nltk.corpus.*
+*/
 
 class TempCheckerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_temp_checker)
 
-        Downloader().download("punkt") // download the word tokenizer
+       /* Downloader().download("punkt") // download the word tokenizer
         Downloader().download("stopwords") // download the stopwords
 
         val stopWords = stopwords.words("tagalog").toSet() // set of Tagalog stopwords
@@ -32,6 +34,6 @@ class TempCheckerActivity : AppCompatActivity() {
 
         val text = "Ang mga tao ay nagtatrabaho sa opisina."
         val correctedText = checkSpelling(text)
-        println(correctedText)
+        println(correctedText)*/
     }
 }

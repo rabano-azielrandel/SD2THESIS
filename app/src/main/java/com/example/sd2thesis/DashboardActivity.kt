@@ -60,7 +60,7 @@ class DashboardActivity : AppCompatActivity() {
 
         val userCurrent = FirebaseAuth.getInstance().currentUser
 
-        if (userCurrent != null) {
+        /*if (userCurrent != null) {
             val email = userCurrent.email
 
             if (email != null) {
@@ -80,6 +80,35 @@ class DashboardActivity : AppCompatActivity() {
                                 org.text = school
                                 break
                             }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@DashboardActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+            }
+        }*/
+
+        if (userCurrent != null) {
+            val email = userCurrent.email
+
+            if (email != null) {
+                database.child("Profiles").orderByChild("email_address").equalTo(email).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        for (profileSnapshot in dataSnapshot.children) {
+                            val profile = profileSnapshot.value as Map<*, *>
+                            val username = profile["first_name"] as String
+                            val birthday = profile["bithday"] as String
+                            val gradeLvl = profile["grade_level"] as String
+                            val school = profile["school"] as String
+
+                            name.text = username
+                            bday.text = birthday
+                            grade.text = gradeLvl
+                            org.text = school
+                            break
                         }
                     }
 
