@@ -53,12 +53,16 @@ class MainActivity : AppCompatActivity() {
         val txteditorReturn = findViewById<AppCompatButton>(R.id.btn_txt_editor_return)
         val txteditorSave = findViewById<AppCompatButton>(R.id.btn_save)
         val txtDownload = findViewById<AppCompatButton>(R.id.btn_download)
+        val checkSpell = findViewById<AppCompatButton>(R.id.btn_spellCheck)
 
         /** Spannable string **/
         var spannableString: SpannableString?
 
-
-
+        /** For spell checker **/
+        val cSpell = intent.getStringExtra("txt")
+        if (cSpell != null && cSpell.isNotEmpty()) {
+            textEditor.setText(cSpell)
+        }
 
         /**
           *NOTE: we must highlight first the word inorder to apply the formatting.
@@ -133,10 +137,7 @@ class MainActivity : AppCompatActivity() {
             textEditor.setText(spannableString)
         }
 
-         /**  return button
-            * if the user is already logged in go dashboard
-            * else prompt the user to log in
-            * not yet working **/
+         /**  return button **/
         txteditorReturn.setOnClickListener{
 
             user = FirebaseAuth.getInstance()
@@ -152,8 +153,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
-
 
         /** save button **/
         txteditorSave.setOnClickListener {
@@ -197,7 +196,14 @@ class MainActivity : AppCompatActivity() {
             showFileNameInputDialog()
         }
 
+        /** spell checker button**/
+        checkSpell.setOnClickListener{
+            val text = textEditor.text.toString()
+            val intent = Intent(this, TempCheckerActivity::class.java)
 
+            intent.putExtra("text", text)
+            startActivity(intent)
+        }
 
     }
 

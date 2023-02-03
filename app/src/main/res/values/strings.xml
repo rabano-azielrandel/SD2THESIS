@@ -27,5 +27,7 @@
     <string name="btn_current_text">Current Text</string>
     <string name="btn_corrected_text">Corrected Text</string>
     <string name="btn_return">Return</string>
+    <string name="spell_checker">Spell Checker</string>
+    <string name="check">check</string>
 
 </resources>
