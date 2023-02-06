@@ -14,8 +14,8 @@ import java.util.StringTokenizer
 
 class TempCheckerActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
-    private val list : ArrayList<String> = ArrayList()
+    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
+    private val words = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +33,12 @@ class TempCheckerActivity : AppCompatActivity() {
         /** setting the text from text editor to current text tv **/
         currText.text = setTxt
 
+        /** For spell checker list of words **/
         dbRef.addValueEventListener(object  : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                for (suggestSnapshot in snapshot.children) {
-                    val suggestion = suggestSnapshot.key.toString()
-                    list.add(suggestion)
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (childSnapshot in dataSnapshot.children) {
+                    val childData = childSnapshot.getValue(Word::class.java)
+                    words.add(childData?.word ?: continue)
                 }
             }
 
@@ -91,7 +91,7 @@ class TempCheckerActivity : AppCompatActivity() {
             var closestWord = ""
             var minDistance = Int.MAX_VALUE
 
-            for (dictionaryWord in list) {
+            for (dictionaryWord in words) {
                 val distance = editDistance(word, dictionaryWord)
                 if (distance < minDistance) {
                     closestWord = dictionaryWord
@@ -125,4 +125,11 @@ class TempCheckerActivity : AppCompatActivity() {
         }
         return dp[m][n]
     }
+
+    data class Word(
+        val definition: String = "",
+        val language: String = "",
+        val link: String = "",
+        val word: String = ""
+    )
 }

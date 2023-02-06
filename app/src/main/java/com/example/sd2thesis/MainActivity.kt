@@ -59,13 +59,7 @@ class MainActivity : AppCompatActivity() {
 
         /** Spannable string **/
         var spannableString: SpannableString?
-
-        /** For spell checker **/
-        val cSpell = intent.getStringExtra("txt")
-        if (cSpell != null && cSpell.isNotEmpty()) {
-            textEditor.setText(cSpell)
-        }
-
+        
         /**
          *NOTE: we must highlight first the word inorder to apply the formatting.
          * bold formatting **/
