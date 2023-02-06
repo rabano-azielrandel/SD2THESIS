@@ -1,5 +1,6 @@
 package com.example.sd2thesis
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import java.io.File
 
 
@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     /**for download**/
 
     private lateinit var textEditor: EditText
+
+    private val FILE_NAME = "text_file"
 
 
 
@@ -65,8 +67,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         /**
-          *NOTE: we must highlight first the word inorder to apply the formatting.
-          * bold formatting **/
+         *NOTE: we must highlight first the word inorder to apply the formatting.
+         * bold formatting **/
         bold.setOnClickListener{
             spannableString = SpannableString(textEditor.text)
             spannableString!!.setSpan(
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             spannableString!!.setSpan(
                 UnderlineSpan(), textEditor.selectionStart,
                 textEditor.selectionEnd,0)
-                textEditor.setText(spannableString)
+            textEditor.setText(spannableString)
         }
 
         /** right alignment **/
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity() {
             textEditor.setText(spannableString)
         }
 
-         /**  return button **/
+        /**  return button **/
         txteditorReturn.setOnClickListener{
 
             user = FirebaseAuth.getInstance()
@@ -182,7 +184,15 @@ class MainActivity : AppCompatActivity() {
 
         /**From View Work Activity**/
         val contents = intent.getByteArrayExtra("contents")
-        textEditor.setText(contents?.let { String(it) })
+        if (contents != null) {
+            textEditor.setText(String(contents))
+        } else {
+            // If there is no text coming from the ViewWork activity, try to get the preserved text from shared preferences
+            val sharedPref = getPreferences(Context.MODE_PRIVATE)
+            val preservedText = sharedPref.getString(FILE_NAME, "")
+            textEditor.setText(preservedText)
+        }
+
 
 
         /**For Upload**/
@@ -205,6 +215,15 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString(FILE_NAME, textEditor.text.toString())
+        editor.apply()
     }
 
     /**For download**/
@@ -230,21 +249,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveFile(fileName: String) {
 
-            val fileText = textEditor.text.toString()
-            val file =
-                File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    "$fileName.txt")
+        val fileText = textEditor.text.toString()
+        val file =
+            File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                "$fileName.txt")
 
-            if (!file.exists()) {
-                file.writeText(fileText)
-                Toast.makeText(this,
-                    "Your file is downloaded successfully! Location: Downloads",
-                    Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "File already exists with that name", Toast.LENGTH_SHORT)
-                    .show()
-            }
+        if (!file.exists()) {
+            file.writeText(fileText)
+            Toast.makeText(this,
+                "Your file is downloaded successfully! Location: Downloads",
+                Toast.LENGTH_LONG).show()
+        } else {
+            showOverwriteConfirmationDialog(file, fileText)
         }
+    }
+
+    private fun showOverwriteConfirmationDialog(file: File, fileText: String) {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("File already exists")
+        builder.setMessage("Do you want to overwrite the file with the same name?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            file.writeText(fileText)
+            Toast.makeText(this,
+                "File is downloaded successfully!",
+                Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("No") { dialog, _ -> dialog.cancel() }
+
+        builder.show()
+    }
 
 
 }

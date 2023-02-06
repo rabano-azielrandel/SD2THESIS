@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.util.Log
-import com.google.firebase.storage.StorageReference
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.firebase.auth.FirebaseAuth
@@ -59,7 +58,9 @@ class ViewWorkActivity : AppCompatActivity() {
                 val fileRef = storageRef.child("users/${user.currentUser?.uid}/works/$it")
                 fileRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { contents ->
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("file_name", item)
                     intent.putExtra("contents", contents)
+                    intent.putExtra("overwrite_requested", true)
                     startActivity(intent)
                 }
             }
