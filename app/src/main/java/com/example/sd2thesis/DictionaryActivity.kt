@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
  * luisligunas/pinoy-dictionary-scraper **/
 class DictionaryActivity : AppCompatActivity() {
 
-    private var dbRef = FirebaseDatabase.getInstance().getReference("db")
+    private var dbRef = FirebaseDatabase.getInstance().getReference("Dictionary")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +34,8 @@ class DictionaryActivity : AppCompatActivity() {
         val meaning = findViewById<TextView>(R.id.tv_searched_meaning)
         val thesaurus = findViewById<AppCompatButton>(R.id.btn_go_thesaurus)
 
-        val list : ArrayList<String> = ArrayList()
-        val autoComplete = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+        val keys = mutableListOf<String>()
+        val autoComplete = ArrayAdapter(this, android.R.layout.simple_list_item_1, keys)
         searchBarDict.setAdapter(autoComplete)
 
         /** Redirecting to dashboard **/
@@ -45,27 +45,15 @@ class DictionaryActivity : AppCompatActivity() {
         }
 
         /** Storing the data in firebase to list so that we can have autocomplete **/
-        list.clear()
+        keys.clear()
         autoComplete.clear()
         dbRef.addValueEventListener(object  : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-
-                for (suggestSnapshot in snapshot.children) {
-                    //Get the suggestion by childing the key of the string you want to get.
-                    val suggestion = suggestSnapshot.key.toString()
-                    //Add the retrieved string to the list
-                    list.add(suggestion)
-                    autoComplete.setNotifyOnChange(true)
+                for (childSnapshot in snapshot.children) {
+                    val childData = childSnapshot.getValue(Snap::class.java)
+                    keys.add(childData?.word ?: continue)
                 }
 
-                /** for other custom db**/
-                /*for (data in snapshot.children) {
-                    //Get the suggestion by childing the key of the string you want to get.
-                    val suggestion = data.child("word").value.toString()
-                    //Add the retrieved string to the list
-                    list.add(suggestion)
-
-                }*/
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -80,19 +68,18 @@ class DictionaryActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please input a word!", Toast.LENGTH_LONG).show()
             } else{
                 dbRef.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
                         val keyWord = searchBarDict.text.toString()
                         keyWord.also { word.text = it }
 
-                        if (snapshot.child(keyWord).exists()){
-                            //val definition: String = snapshot.child("definition").value.toString()
-                            //val word: String = snapshot.child("word").value.toString()
-
-                            snapshot.child(keyWord).value.toString().also { meaning.text = it }
-                        }else{
-                            "The word is not yet registered".also { meaning.text = it }
+                        dataSnapshot.children.forEach { childSnapshot ->
+                            val childData = childSnapshot.getValue(Snap::class.java)
+                            if (childData?.word == keyWord) {
+                                val definition = childData.definition
+                                meaning.text = definition
+                            }
                         }
+
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -109,4 +96,11 @@ class DictionaryActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    data class Snap(
+        val definition: String = "",
+        val language: String = "",
+        val link: String = "",
+        val word: String = ""
+    )
 }
