@@ -60,36 +60,6 @@ class DashboardActivity : AppCompatActivity() {
 
         val userCurrent = FirebaseAuth.getInstance().currentUser
 
-        /*if (userCurrent != null) {
-            val email = userCurrent.email
-
-            if (email != null) {
-                database.child("Profiles").addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        for (profileSnapshot in dataSnapshot.children) {
-                            val profile = profileSnapshot.value as Map<*, *>
-                            if (profile["email_address"] == email) {
-                                val username = profile["first_name"] as String
-                                val birthday = profile["bithday"] as String
-                                val gradeLvl = profile["grade_level"] as String
-                                val school = profile["school"] as String
-
-                                name.text = username
-                                bday.text = birthday
-                                grade.text = gradeLvl
-                                org.text = school
-                                break
-                            }
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@DashboardActivity, "Failed to retrieve data from database", Toast.LENGTH_SHORT).show()
-                    }
-                })
-
-            }
-        }*/
 
         if (userCurrent != null) {
             val email = userCurrent.email
@@ -120,17 +90,14 @@ class DashboardActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
         var intent: Intent?
 
 
         /** View profile btn must show the personal info of the user
          * NOT WORKING**/
         viewProfile.setOnClickListener{
-            Toast.makeText(this, "available next patch", Toast.LENGTH_LONG).show()
+            intent = Intent(this,EditProfile::class.java)
+            startActivity(intent)
         }
 
         /** logout and redirect to main page
