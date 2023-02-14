@@ -58,12 +58,12 @@ class ViewWorkActivity : AppCompatActivity() {
                 val fileRef = storageRef.child("users/${user.currentUser?.uid}/works/$it")
                 fileRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { contents ->
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("file_name", item)
                     intent.putExtra("contents", contents)
-                    intent.putExtra("overwrite_requested", true)
+                    intent.putExtra("filename", it)
                     startActivity(intent)
                 }
             }
         }
+
     }
 }

@@ -150,21 +150,79 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        /** save button **/
+
+        /**Saved Button**/
         txteditorSave.setOnClickListener {
             val data = textEditor.text.toString()
 
             user = FirebaseAuth.getInstance()
 
-            if(user.currentUser != null){
+            if (user.currentUser != null) {
                 user.currentUser?.let {
                     try {
-                        /** Conversion of text into bytes **/
                         val userWorksRef = storageRef.getReference("users/" + it.uid + "/works")
-                        userWorksRef.child(data).putBytes(data.toByteArray()).addOnSuccessListener {
-                            Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
+
+                        // Check if the saved text came from the listView
+                        val fileName = intent.getStringExtra("filename")
+                        if (fileName != null) {
+                            // Prompt the user if they want to overwrite the saved text or not
+                            val builder = AlertDialog.Builder(this)
+                            builder.setMessage("Do you want to overwrite the saved text?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes") { dialog, id ->
+                                    // Overwrite the saved text
+                                    userWorksRef.child(fileName).putBytes(data.toByteArray())
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
+                                        }
+                                }
+                                .setNegativeButton("No") { dialog, id ->
+                                    // Save the text in a new entry in the listView
+                                    val filenameInputDialog = EditText(this)
+                                    filenameInputDialog.hint = "Enter file name"
+                                    val dialog = AlertDialog.Builder(this)
+                                        .setTitle("Save As")
+                                        .setView(filenameInputDialog)
+                                        .setPositiveButton("Save") { dialog, which ->
+                                            val newFileName = filenameInputDialog.text.toString()
+                                            if (newFileName.isEmpty()) {
+                                                Toast.makeText(this, "File name cannot be empty", Toast.LENGTH_LONG).show()
+                                            } else {
+                                                userWorksRef.child(newFileName).putBytes(data.toByteArray())
+                                                    .addOnSuccessListener {
+                                                        Toast.makeText(this, "Saved as $newFileName", Toast.LENGTH_LONG).show()
+                                                    }
+                                            }
+                                        }
+                                        .setNegativeButton("Cancel") { dialog, which -> }
+                                        .create()
+                                    dialog.show()
+                                }
+                            val alert = builder.create()
+                            alert.show()
+                        } else {
+                            // Save the text in a new entry in the listView
+                            val filenameInputDialog = EditText(this)
+                            filenameInputDialog.hint = "Enter file name"
+                            val dialog = AlertDialog.Builder(this)
+                                .setTitle("Save As")
+                                .setView(filenameInputDialog)
+                                .setPositiveButton("Save") { dialog, which ->
+                                    val newFileName = filenameInputDialog.text.toString()
+                                    if (newFileName.isEmpty()) {
+                                        Toast.makeText(this, "File name cannot be empty", Toast.LENGTH_LONG).show()
+                                    } else {
+                                        userWorksRef.child(newFileName).putBytes(data.toByteArray())
+                                            .addOnSuccessListener {
+                                                Toast.makeText(this, "Saved as $newFileName", Toast.LENGTH_LONG).show()
+                                            }
+                                    }
+                                }
+                                .setNegativeButton("Cancel") { dialog, which -> }
+                                .create()
+                            dialog.show()
                         }
-                    } catch (e : Exception){
+                    } catch (e: Exception) {
                         Toast.makeText(this, "Failed", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -173,8 +231,9 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
             }
-
         }
+
+
 
         /**From View Work Activity**/
         val contents = intent.getByteArrayExtra("contents")
