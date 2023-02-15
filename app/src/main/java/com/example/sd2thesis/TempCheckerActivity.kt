@@ -106,7 +106,6 @@ class TempCheckerActivity : AppCompatActivity() {
 
     /** for calculating how much distance does the misspelled word in the dictionary word **/
     /** it is for calculating the like terms of misspelled to dictionary word **/
-    /** we still need to use better algo for this such as Levenshtein algorithm **/
     private fun editDistance(word1: String, word2: String): Int {
         val m = word1.length
         val n = word2.length
