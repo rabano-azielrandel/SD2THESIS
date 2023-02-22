@@ -1,0 +1,19 @@
+@echo off
+"C:\\Users\\aziel\\AppData\\Local\\Android\\Sdk\\cmake\\3.18.1\\bin\\cmake.exe" ^
+  "-HC:\\Users\\aziel\\Documents\\GitHub\\SD2THESIS\\openCV\\libcxx_helper" ^
+  "-DCMAKE_SYSTEM_NAME=Android" ^
+  "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" ^
+  "-DCMAKE_SYSTEM_VERSION=23" ^
+  "-DANDROID_PLATFORM=android-23" ^
+  "-DANDROID_ABI=x86" ^
+  "-DCMAKE_ANDROID_ARCH_ABI=x86" ^
+  "-DANDROID_NDK=C:\\Users\\aziel\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620" ^
+  "-DCMAKE_ANDROID_NDK=C:\\Users\\aziel\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620" ^
+  "-DCMAKE_TOOLCHAIN_FILE=C:\\Users\\aziel\\AppData\\Local\\Android\\Sdk\\ndk\\23.1.7779620\\build\\cmake\\android.toolchain.cmake" ^
+  "-DCMAKE_MAKE_PROGRAM=C:\\Users\\aziel\\AppData\\Local\\Android\\Sdk\\cmake\\3.18.1\\bin\\ninja.exe" ^
+  "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\\Users\\aziel\\Documents\\GitHub\\SD2THESIS\\openCV\\build\\intermediates\\cxx\\RelWithDebInfo\\211w4f64\\obj\\x86" ^
+  "-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\\Users\\aziel\\Documents\\GitHub\\SD2THESIS\\openCV\\build\\intermediates\\cxx\\RelWithDebInfo\\211w4f64\\obj\\x86" ^
+  "-DCMAKE_BUILD_TYPE=RelWithDebInfo" ^
+  "-BC:\\Users\\aziel\\Documents\\GitHub\\SD2THESIS\\openCV\\.cxx\\RelWithDebInfo\\211w4f64\\x86" ^
+  -GNinja ^
+  "-DANDROID_STL=c++_shared"

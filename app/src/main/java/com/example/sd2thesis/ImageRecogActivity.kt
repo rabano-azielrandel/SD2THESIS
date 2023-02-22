@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import org.opencv.android.OpenCVLoader
 
 class ImageRecogActivity : AppCompatActivity() {
 
@@ -52,7 +53,7 @@ class ImageRecogActivity : AppCompatActivity() {
 
             }
         }
-
+        
     }
 
     /** Cam constraints **/
