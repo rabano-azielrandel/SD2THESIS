@@ -14,4 +14,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SD2THESIS"
 include ':app'
-include ':openCV'
