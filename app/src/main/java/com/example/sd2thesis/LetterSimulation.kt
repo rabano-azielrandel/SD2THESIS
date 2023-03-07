@@ -44,11 +44,24 @@ class LetterSimulation : AppCompatActivity() {
             val canvas = Canvas(bitmap)
             paintView.draw(canvas)
 
-            // Save the bitmap to the device's Downloads folder
+            // Create a new bitmap with white background
+            val newBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
+            val newCanvas = Canvas(newBitmap)
+            newCanvas.drawColor(Color.WHITE)
+
+            // Draw the original bitmap on top of the white background
+            newCanvas.drawBitmap(bitmap, 0f, 0f, null)
+
+            // Save the new bitmap to the device's Downloads folder
             val folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-            val file = File(folder, "my_image.png")
+            val file = File(folder, "image.jpeg")
+
+            if (file.exists()) {
+                file.delete()
+            }
+
             val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+            newBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
 
