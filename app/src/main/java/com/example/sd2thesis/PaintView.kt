@@ -46,7 +46,7 @@ class PaintView : View {
         paintBrush.color = currentBrush
         paintBrush.style = Paint.Style.STROKE
         paintBrush.strokeJoin = Paint.Join.ROUND
-        paintBrush.strokeWidth = 10f
+        paintBrush.strokeWidth = 55f
 
         params = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,

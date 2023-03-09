@@ -19,22 +19,14 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/purple"/>
+            android:background="@drawable/purple" />
 
         <ImageButton
             android:id="@+id/blackColor"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/black"/>
-
-        <ImageButton
-            android:id="@+id/redColor"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/red"/>
-
+            android:background="@drawable/black" />
 
         <ImageButton
             android:id="@+id/blueColor"
@@ -43,25 +35,90 @@
             android:layout_margin="10dp"
             android:background="@drawable/blue"/>
 
+
         <ImageButton
-            android:id="@+id/whiteColor"
+            android:id="@+id/save_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:background="@drawable/white"/>
+            android:background="@drawable/savebutton"/>
 
-
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/clearbutton"/>
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imageLetter"
+        android:layout_width="match_parent"
+        android:layout_height="812dp"
+        android:layout_marginStart="-5dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="2dp"
+        app:srcCompat="@color/Transparent" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_height="match_parent">
 
-        <include layout="@layout/paint_view"/>
+        <include
+            layout="@layout/paint_view"
+            android:layout_width="match_parent"
+            android:layout_height="697dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="131dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="63dp"
+            tools:ignore="IncludeLayoutParam" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:layout_above="@id/select_letter"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@drawable/paint_background"
+            android:orientation="horizontal" />
+
+        <ImageButton
+            android:id="@+id/select_letter"
+            android:layout_width="87dp"
+            android:layout_height="88dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="14dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/a_zbutton"
+            android:maxWidth="60dp"
+            android:maxHeight="60dp"
+            android:scaleType="centerInside"/>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="92dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginBottom="97dp"
+            android:max="100"
+            android:progress="10" />
 
     </RelativeLayout>
+
+
 
 
 </RelativeLayout>

@@ -17,6 +17,20 @@
         android:theme="@style/Theme.SD2THESIS"
         tools:targetApi="31">
         <activity
+            android:name=".PaintImage"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".PaintLetter"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EditProfile"
             android:exported="false">
             <meta-data
