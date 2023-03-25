@@ -11,6 +11,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.InputStreamReader
 import java.util.StringTokenizer
 
 class TempCheckerActivity : AppCompatActivity() {
@@ -35,24 +39,18 @@ class TempCheckerActivity : AppCompatActivity() {
         currText.text = setTxt
 
         /** For spell checker list of words **/
-        dbRef.addValueEventListener(object  : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (childSnapshot in dataSnapshot.children) {
-                    val childData = childSnapshot.getValue(Word::class.java)
-                    words.add(childData?.word ?: continue)
-                }
-            }
+        val inputStream = resources.openRawResource(R.raw.wordset)
+        val bufferedReader = BufferedReader(InputStreamReader(inputStream))
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-        })
+        bufferedReader.forEachLine {
+            words.add(it)
+        }
 
+        bufferedReader.close()
 
         /** Check Button **/
         check.setOnClickListener {
             val text = currText.text.toString()
-            Toast.makeText(this, "$words", Toast.LENGTH_SHORT).show()
 
             val tokenizer = StringTokenizer(text, " ")
             var correctedText = ""
@@ -60,22 +58,20 @@ class TempCheckerActivity : AppCompatActivity() {
             while (tokenizer.hasMoreTokens()) {
                 val token = tokenizer.nextToken()
                 if (words.contains(token)) {
-                    Toast.makeText(this, "$token", Toast.LENGTH_SHORT).show()
                     correctedText += "$token "
                 } else {
                     val correctedToken = getCorrectedText(token)
-                    Toast.makeText(this, "$correctedToken", Toast.LENGTH_SHORT).show()
                     correctedText += "$correctedToken "
                 }
             }
 
-            Log.d("DEBUG", "Corrected text: \"$correctedText\"") // Debug print statement
+            //Log.d("DEBUG", "Corrected text: \"$correctedText\"") // Debug print statement
 
-            if (correctedText.isNotBlank()) {
+            if (correctedText.trim() == text.trim()) {
+                Toast.makeText(this, "Nothing to correct", Toast.LENGTH_SHORT).show()
+            } else {
                 checkedText.text = correctedText.trim()
                 Toast.makeText(this, "Corrected", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Nothing to correct", Toast.LENGTH_SHORT).show()
             }
 
         }
