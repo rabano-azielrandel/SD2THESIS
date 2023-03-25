@@ -3,6 +3,7 @@ package com.example.sd2thesis
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
@@ -51,15 +52,32 @@ class TempCheckerActivity : AppCompatActivity() {
         /** Check Button **/
         check.setOnClickListener {
             val text = currText.text.toString()
+            Toast.makeText(this, "$words", Toast.LENGTH_SHORT).show()
 
-            if (text.isBlank()) {
-                Toast.makeText(this, "Return to text editor and input your text!", Toast.LENGTH_SHORT).show()
-            } else {
-                val newTxt = spellCheck(text)
-                checkedText.text = newTxt
+            val tokenizer = StringTokenizer(text, " ")
+            var correctedText = ""
 
-                Toast.makeText(this, "corrected", Toast.LENGTH_SHORT).show()
+            while (tokenizer.hasMoreTokens()) {
+                val token = tokenizer.nextToken()
+                if (words.contains(token)) {
+                    Toast.makeText(this, "$token", Toast.LENGTH_SHORT).show()
+                    correctedText += "$token "
+                } else {
+                    val correctedToken = getCorrectedText(token)
+                    Toast.makeText(this, "$correctedToken", Toast.LENGTH_SHORT).show()
+                    correctedText += "$correctedToken "
+                }
             }
+
+            Log.d("DEBUG", "Corrected text: \"$correctedText\"") // Debug print statement
+
+            if (correctedText.isNotBlank()) {
+                checkedText.text = correctedText.trim()
+                Toast.makeText(this, "Corrected", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Nothing to correct", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         /** Return Button **/
@@ -72,36 +90,22 @@ class TempCheckerActivity : AppCompatActivity() {
         }
     }
 
-    private fun spellCheck(text: String): String {
-        /** get the list of words in the 'db' firebase dictionary **/
-
-        var correctedTxt = getCorrectedText(text)
-
-        return correctedTxt
-    }
-
     private fun getCorrectedText(text: String): String {
         /** tokenizing the text as well as calculating the distance of the wrong
          * and the correct one **/
-        val tokenizer = StringTokenizer(text)
-        val correctedText = StringBuilder()
+        val word = text
+        var closestWord = ""
+        var minDistance = Int.MAX_VALUE
 
-        while (tokenizer.hasMoreTokens()) {
-            var word = tokenizer.nextToken()
-            var closestWord = ""
-            var minDistance = Int.MAX_VALUE
-
-            for (dictionaryWord in words) {
-                val distance = editDistance(word, dictionaryWord)
-                if (distance < minDistance) {
-                    closestWord = dictionaryWord
-                    minDistance = distance
-                }
+        for (dictionaryWord in words) {
+            val distance = editDistance(word, dictionaryWord)
+            if (distance < minDistance) {
+                closestWord = dictionaryWord
+                minDistance = distance
             }
-            correctedText.append(closestWord).append(" ")
         }
 
-        return correctedText.toString().trim()
+        return closestWord
     }
 
     /** for calculating how much distance does the misspelled word in the dictionary word **/
@@ -110,18 +114,26 @@ class TempCheckerActivity : AppCompatActivity() {
         val m = word1.length
         val n = word2.length
         val dp = Array(m + 1) { IntArray(n + 1) }
+
         for (i in 0..m) {
             dp[i][0] = i
         }
+
         for (j in 0..n) {
             dp[0][j] = j
         }
+
         for (i in 1..m) {
             for (j in 1..n) {
-                val cost = if (word1[i - 1] == word2[j - 1]) 0 else 1
-                dp[i][j] = minOf(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost)
+                val substitutionCost = if (word1[i - 1] == word2[j - 1]) 0 else 1
+                dp[i][j] = minOf(
+                    dp[i - 1][j] + 1, // deletion
+                    dp[i][j - 1] + 1, // insertion
+                    dp[i - 1][j - 1] + substitutionCost // substitution
+                )
             }
         }
+
         return dp[m][n]
     }
 
