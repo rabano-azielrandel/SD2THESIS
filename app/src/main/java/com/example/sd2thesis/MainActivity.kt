@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         val txteditorSave = findViewById<AppCompatButton>(R.id.btn_save)
         val txtDownload = findViewById<AppCompatButton>(R.id.btn_download)
         val checkSpell = findViewById<AppCompatButton>(R.id.btn_spellCheck)
+        val checkGrammar = findViewById<AppCompatButton>(R.id.btn_grammarChecker)
 
         /** Spannable string **/
         var spannableString: SpannableString?
@@ -263,6 +264,15 @@ class MainActivity : AppCompatActivity() {
         checkSpell.setOnClickListener{
             val text = textEditor.text.toString()
             val intent = Intent(this, TempCheckerActivity::class.java)
+
+            intent.putExtra("text", text)
+            startActivity(intent)
+        }
+
+        /** grannar checker button**/
+        checkGrammar.setOnClickListener {
+            val text = textEditor.text.toString()
+            val intent = Intent(this, GrammarActivity::class.java)
 
             intent.putExtra("text", text)
             startActivity(intent)

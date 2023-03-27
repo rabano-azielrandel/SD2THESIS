@@ -29,5 +29,10 @@
     <string name="btn_return">Return</string>
     <string name="spell_checker">Spell Checker</string>
     <string name="check">check</string>
+    <string name="grammar_title">Grammar Checker</string>
+    <string name="sentence">sentence</string>
+    <string name="sentence_pattern">sentence pattern</string>
+    <string name="suggested_pattern">suggested pattern</string>
+    <string name="suggested_sentence">suggested sentence</string>
 
 </resources>
