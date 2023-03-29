@@ -34,5 +34,7 @@
     <string name="sentence_pattern">sentence pattern</string>
     <string name="suggested_pattern">suggested pattern</string>
     <string name="suggested_sentence">suggested sentence</string>
+    <string name="get_started">Get Started</string>
+    <string name="mabuhay">Mabuhay!</string>
 
 </resources>
