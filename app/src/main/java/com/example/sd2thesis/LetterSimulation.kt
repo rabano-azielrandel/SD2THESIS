@@ -11,6 +11,14 @@ import com.example.sd2thesis.PaintView.Companion.currentBrush
 import com.example.sd2thesis.PaintView.Companion.pathList
 import java.io.File
 import java.io.FileOutputStream
+import android.content.res.AssetManager // trial
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import org.tensorflow.lite.Interpreter
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.channels.FileChannel
+
 
 class LetterSimulation : AppCompatActivity() {
 
@@ -79,6 +87,16 @@ class LetterSimulation : AppCompatActivity() {
             outputStream.close()
 
             Toast.makeText(this, "Image saved to downloads", Toast.LENGTH_SHORT).show()
+
+            /** not yet working **/
+            /**
+            val classifier = ImageClassifier(assets)
+            classifier.loadModel("neuralNetModel.tflite")
+            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            val imagePath = "$downloadsDir/image.jpeg"
+            val (classIndex, probVal) = classifier.predictImage(imagePath)
+            val predictionMessage = "Class index: $classIndex, Probability: $probVal"
+            Toast.makeText(this, predictionMessage, Toast.LENGTH_SHORT).show() **/
         }
 
         purpleButton.setOnClickListener {
@@ -125,7 +143,8 @@ class LetterSimulation : AppCompatActivity() {
 
     //if the user click the Select Letter button
     private fun showSingleSelectionDialog() {
-        val items = arrayOf("None", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M","N", "Ñ", "Ng", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+        val items = arrayOf("None", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "Ñ", "Ng", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Select a letter")
@@ -218,4 +237,75 @@ class LetterSimulation : AppCompatActivity() {
         imageView.setImageResource(imageResource)
     }
 
+}
+class ImageClassifier(private val assets: AssetManager){
+    private lateinit var interpreter: Interpreter
+    private val imgWidth = 32
+    private val imgHeight = 32
+    private val threshold = 0.65
+
+    fun loadModel(modelPath: String) {
+        val tfliteModel = loadModelFile(modelPath)
+        val options = Interpreter.Options()
+        interpreter = Interpreter(tfliteModel, options)
+    }
+
+    fun predictImage(imgPath: String): Pair<Int, Float> {
+        // read the image
+        val imgOrig = BitmapFactory.decodeStream(assets.open(imgPath))
+
+        // converting img to bitmap
+        val img = Bitmap.createScaledBitmap(imgOrig, imgWidth, imgHeight, true)
+
+        // sending img to preprocessing
+        val input = preprocessImage(img)
+
+        // predicting
+        val output = Array(1) { FloatArray(10) }
+        interpreter.run(input, output)
+
+        val classIndex = output[0].indices.maxByOrNull { output[0][it] }!!
+        val probVal = output[0][classIndex]
+
+        if (probVal > threshold) {
+            // Add label and confidence to the image
+            val canvas = android.graphics.Canvas(imgOrig)
+            android.graphics.Paint().apply {
+                textSize = 60f
+                color = android.graphics.Color.RED
+            }.let {
+                canvas.drawText("$classIndex : $probVal", 50f, 50f, it)
+            }
+        }
+
+        return Pair(classIndex, probVal)
+    }
+
+    private fun preprocessImage(bitmap: Bitmap): ByteBuffer {
+        val input = ByteBuffer.allocateDirect(imgWidth * imgHeight * 4)
+        input.order(ByteOrder.nativeOrder())
+        val pixels = IntArray(imgWidth * imgHeight)
+        bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+
+        for (pixelValue in pixels) {
+            val r = (pixelValue shr 16) and 0xff
+            val g = (pixelValue shr 8) and 0xff
+            val b = (pixelValue) and 0xff
+
+            val gray = (r + g + b) / 3f / 255f
+            input.putFloat(gray)
+        }
+
+        input.rewind()
+        return input
+    }
+
+    private fun loadModelFile(modelPath: String): ByteBuffer {
+        val fileDescriptor = assets.openFd("ml/$modelPath")
+        val inputStream = fileDescriptor.createInputStream()
+        val fileChannel = inputStream.channel
+        val startOffset = fileDescriptor.startOffset
+        val declaredLength = fileDescriptor.declaredLength
+        return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
+    }
 }
